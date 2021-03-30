@@ -1,8 +1,7 @@
 version: 2.1
 
 orbs:
-  # Replace this with your own!
-  cosign-orb-test: cpanato/cosign-orb-test@<<pipeline.parameters.dev-orb-version>>
+  cosign: cpanato/cosign-orb-test@<<pipeline.parameters.dev-orb-version>>
   orb-tools: circleci/orb-tools@10.0
   bats: circleci/bats@1.0
   shellcheck: circleci/shellcheck@2.0
@@ -29,10 +28,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      # "greet" is a sample command packaged with this orb config.
-      # This sample integration test will run as long as the greet command exists. Once you remove the greet command you should remove this line.
-      # Push new changes first, before adding new tests to your config.
-      - cosign-orb-test/greet
+      - cosign/install
 
 workflows:
   # Prior to producing a development orb (which requires credentials) basic validation, linting, and even unit testing can be performed.
@@ -44,14 +40,14 @@ workflows:
       - orb-tools/pack # Pack orb source
       - shellcheck/check:
           dir: ./src/scripts
-          exclude: SC2148
+          exclude: SC2148,SC1090
       # optional: Run BATS tests against your scripts
       - bats/run:
           path: ./src/tests
       # Publish development version(s) of the orb.
       - orb-tools/publish-dev:
           orb-name: cpanato/cosign-orb-test
-          context: orb-publishing # A restricted context containing your private publishing credentials. Will only execute if approved by an authorized user.
+          context: orb-publishing
           requires:
             - orb-tools/lint
             - orb-tools/pack
@@ -83,13 +79,12 @@ workflows:
       - orb-tools/dev-promote-prod-from-commit-subject:
           orb-name: cpanato/cosign-orb-test
           context: orb-publishing
-          add-pr-comment: false
+          add-pr-comment: true
           fail-if-semver-not-indicated: true
-          publish-version-tag: false
+          publish-version-tag: true
           requires:
             - integration-test-1
           filters:
             branches:
               only:
-                - master
                 - main

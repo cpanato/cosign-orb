@@ -1,0 +1,13 @@
+description: >
+  It will install cosign
+
+executor: default
+
+parameters:
+  version:
+    type: string
+    default: "v0.1.0"
+    description: "Version of cosing to use"
+steps:
+  - install:
+      version: << parameters.version >>
