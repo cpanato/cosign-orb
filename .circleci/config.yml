@@ -41,7 +41,6 @@ workflows:
       - shellcheck/check:
           dir: ./src/scripts
           exclude: SC2148,SC1090
-      # optional: Run BATS tests against your scripts
       - bats/run:
           path: ./src/tests
       # Publish development version(s) of the orb.
@@ -81,7 +80,7 @@ workflows:
           context: orb-publishing
           add-pr-comment: true
           fail-if-semver-not-indicated: true
-          publish-version-tag: true
+          publish-version-tag: false
           requires:
             - integration-test-1
           filters:
