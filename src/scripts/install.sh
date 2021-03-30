@@ -1,7 +1,7 @@
 Install_Cosign() {
-    curl -LO https://storage.googleapis.com/cosign-releases/v0.1.0/cosign
+    curl -L https://storage.googleapis.com/cosign-releases/v0.2.0/cosign-linux-amd64 -o cosign
     shaBootstrap=$(shasum -a 256 cosign | cut -d' ' -f1);
-    if [[ $shaBootstrap != "fd2e09bb1ca5f5342227b85a4d3b1c498df1ab2439cafb3636381bb82ad29cea" ]]; then exit 1; fi
+    if [[ $shaBootstrap != "677f64870f209b1f41a02247a65697138973e3fb36a0836565cf173b9282aad6" ]]; then exit 1; fi
 
     semver='^v([0-9]+\.){0,2}(\*|[0-9]+)$'
     if [[ "${COSIGN_VERSION}" =~ $semver ]]; then
@@ -11,13 +11,13 @@ Install_Cosign() {
         exit 1
     fi
     # Download custom cosign
-    curl -L https://storage.googleapis.com/cosign-releases/"${COSIGN_VERSION}"/cosign -o cosign_"${COSIGN_VERSION}"
+    curl -L https://storage.googleapis.com/cosign-releases/"${COSIGN_VERSION}"/cosign-linux-amd64 -o cosign_"${COSIGN_VERSION}"
     shaCustom=$(shasum -a 256 cosign_"${COSIGN_VERSION}" | cut -d' ' -f1);
     # check if is the same hash means it is the same release
     if [[ "$shaCustom" != "$shaBootstrap" ]];
     then
         chmod +x cosign
-        curl -LO https://github.com/sigstore/cosign/releases/download/"${COSIGN_VERSION}"/cosign.sig
+        curl -L https://github.com/sigstore/cosign/releases/download/"${COSIGN_VERSION}"/cosign-linux-amd64.sig -o cosign.sig
         curl -LO https://raw.githubusercontent.com/sigstore/cosign/"${COSIGN_VERSION}"/.github/workflows/cosign.pub
         if ./cosign verify-blob --key cosign.pub --signature cosign.sig cosign_"${COSIGN_VERSION}"; then exit 1; fi
         rm cosign

@@ -8,7 +8,7 @@ resource_class: small
 parameters:
   version:
     type: string
-    default: "v0.1.0"
+    default: "v0.2.0"
     description: "Version of cosing to use"
 steps:
   - install:
