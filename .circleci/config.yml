@@ -79,7 +79,7 @@ workflows:
           orb-name: cpanato/cosign-orb-test
           context: orb-publishing
           add-pr-comment: true
-          bot-token-variable: BOT_TOKEN
+          bot-token-variable: GITHUB_TOKEN
           bot-user: cpanato
           fail-if-semver-not-indicated: true
           publish-version-tag: false
