@@ -1,15 +1,14 @@
 version: 2.1
 
 description: >
-  Sample orb description
-# What will your orb allow users to accomplish?
-# Descriptions should be short, simple, and informative.
+    Cosign: Container Signing, Verification and Storage in an OCI registry.
 
-# This information will be displayed in the orb registry and is not mandatory.
+    The Cosign Orbs for CircleCI enables you to use easily integrate Cosign
+    into your CircleCI workflows.
+
+    For more information refer to:
+    https://github.com/sigstore/cosign
+
 display:
-  home_url: "https://www.website.com/docs"
-  source_url: "https://www.github.com/EXAMPLE_ORG/EXAMPLE_PROJECT"
-
-# If your orb requires other orbs, you can import them like this. Otherwise remove the "orbs" stanza.
-# orbs:
-#  hello: circleci/hello-build@0.0.5
+  home_url: "https://www.github.com/cpanato/cosign-orb"
+  source_url: "https://www.github.com/cpanato/cosign-orb"

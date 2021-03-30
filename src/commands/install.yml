@@ -1,0 +1,17 @@
+parameters:
+  version:
+    type: string
+    description:
+      "Version of the Cosign to install. Defaults to the latest version."
+    default: v0.1.0
+
+steps:
+  - run:
+      environment:
+        COSIGN_VERSION: "<<parameters.version>>"
+      name: "Install Cosign"
+      command: <<include(scripts/install.sh)>>
+  - run:
+      name: "Check Cosign"
+      command: |
+        cosign version
