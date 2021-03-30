@@ -14,3 +14,14 @@ setup() {
     echo " --- "
     [ "$status" -eq 0 ] # Check for no exit error
 }
+
+@test "2: Check Install with wrong version" {
+    export COSIGN_VERSION=honk
+    echo "Running cosing install"
+    run Install_Cosign
+    echo "test output status: $status"
+    echo "Output:"
+    echo "$output"
+    echo " --- "
+    [ "$status" -eq 1 ]
+}
