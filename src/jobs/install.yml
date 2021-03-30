@@ -1,7 +1,9 @@
 description: >
   It will install cosign
 
-executor: default
+docker:
+  - image: cimg/base:stable
+resource_class: small
 
 parameters:
   version:
