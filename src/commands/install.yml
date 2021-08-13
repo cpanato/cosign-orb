@@ -3,7 +3,7 @@ parameters:
     type: string
     description:
       "Version of the Cosign to install. Defaults to the latest version."
-    default: v0.2.0
+    default: v1.0.0
 
 steps:
   - run:
