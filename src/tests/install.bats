@@ -5,7 +5,7 @@ setup() {
 }
 
 @test "1: Check Install" {
-    export COSIGN_VERSION=v0.2.0
+    export COSIGN_VERSION=v1.0.0
     echo "Running cosing install"
     run Install_Cosign
     echo "test output status: $status"
@@ -15,7 +15,18 @@ setup() {
     [ "$status" -eq 0 ] # Check for no exit error
 }
 
-@test "2: Check Install with wrong version" {
+@test "2: Check previous version Install" {
+    export COSIGN_VERSION=v0.6.0
+    echo "Running cosing install"
+    run Install_Cosign
+    echo "test output status: $status"
+    echo "Output:"
+    echo "$output"
+    echo " --- "
+    [ "$status" -eq 0 ] # Check for no exit error
+}
+
+@test "3: Check Install with wrong version" {
     export COSIGN_VERSION=honk
     echo "Running cosing install"
     run Install_Cosign
