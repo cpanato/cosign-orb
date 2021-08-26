@@ -1,7 +1,7 @@
 Install_Cosign() {
-    bootstrap_version='v1.0.0'
-    expected_bootstrap_version_digest='e36a05ab402bfee5463ad4752d8dc2941204c7b01a9a9931f921e91d94ba2484'
-    curl -L https://storage.googleapis.com/cosign-releases/v1.0.0/cosign-linux-amd64 -o cosign
+    bootstrap_version='v1.1.0'
+    expected_bootstrap_version_digest='c0b66f6948361f7f2c8c569d82d9471f36dd8354cf43f6bba6e578b31944127b'
+    curl -L https://storage.googleapis.com/cosign-releases/$bootstrap_version/cosign-linux-amd64 -o cosign
     shaBootstrap=$(shasum -a 256 cosign | cut -d' ' -f1);
     if [[ $shaBootstrap != "${expected_bootstrap_version_digest}" ]]; then exit 1; fi
     chmod +x cosign
