@@ -1,6 +1,16 @@
 Install_Cosign() {
-    bootstrap_version='v1.1.0'
-    expected_bootstrap_version_digest='c0b66f6948361f7f2c8c569d82d9471f36dd8354cf43f6bba6e578b31944127b'
+    shopt -s expand_aliases
+    if [ -z "$NO_COLOR" ]; then
+        alias log_info="echo -e \"\033[1;32mINFO\033[0m:\""
+        alias log_error="echo -e \"\033[1;31mERROR\033[0m:\""
+    else
+        alias log_info="echo \"INFO:\""
+        alias log_error="echo \"ERROR:\""
+    fi
+    set -e
+
+    bootstrap_version='v1.8.0'
+    expected_bootstrap_version_digest='5682ad5a0262a4b51883c76d2134f036f2c5ac0b1e3ee8f37b78a45e296e09f6'
     curl -L https://storage.googleapis.com/cosign-releases/$bootstrap_version/cosign-linux-amd64 -o cosign
     shaBootstrap=$(shasum -a 256 cosign | cut -d' ' -f1);
     if [[ $shaBootstrap != "${expected_bootstrap_version_digest}" ]]; then exit 1; fi
