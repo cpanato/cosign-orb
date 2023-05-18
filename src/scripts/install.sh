@@ -9,9 +9,9 @@ Install_Cosign() {
     fi
     set -e
 
-    bootstrap_version='v1.8.0'
-    expected_bootstrap_version_digest='5682ad5a0262a4b51883c76d2134f036f2c5ac0b1e3ee8f37b78a45e296e09f6'
-    curl -L https://storage.googleapis.com/cosign-releases/$bootstrap_version/cosign-linux-amd64 -o cosign
+    bootstrap_version='v2.0.2'
+    expected_bootstrap_version_digest='dc641173cbda29ba48580cdde3f80f7a734f3b558a25e5950a4b19f522678c70'
+    curl -L https://github.com/sigstore/cosign/releases/download/$bootstrap_version/cosign-linux-amd64 -o cosign
     shaBootstrap=$(shasum -a 256 cosign | cut -d' ' -f1);
     if [[ $shaBootstrap != "${expected_bootstrap_version_digest}" ]]; then exit 1; fi
     chmod +x cosign
@@ -36,9 +36,9 @@ Install_Cosign() {
 
     # Download custom cosign
     if [[ "${COSIGN_VERSION}" == 'v0.6.0' ]]; then
-        curl -L https://storage.googleapis.com/cosign-releases/v0.6.0/cosign_linux_amd64 -o cosign_"${COSIGN_VERSION}"
+        curl -L https://github.com/sigstore/cosign/releases/download/v0.6.0/cosign_linux_amd64_0.6.0_linux_amd64 -o cosign_"${COSIGN_VERSION}"
     else
-        curl -L https://storage.googleapis.com/cosign-releases/"${COSIGN_VERSION}"/cosign-linux-amd64 -o cosign_"${COSIGN_VERSION}"
+        curl -L https://github.com/sigstore/cosign/releases/download/"${COSIGN_VERSION}"/cosign-linux-amd64 -o cosign_"${COSIGN_VERSION}"
     fi
     shaCustom=$(shasum -a 256 cosign_"${COSIGN_VERSION}" | cut -d' ' -f1);
 
