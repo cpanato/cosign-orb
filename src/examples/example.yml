@@ -1,12 +1,10 @@
-description: >
-  Simple cosign usage
-
+description: Simple cosign usage
 usage:
   version: 2.1
   orbs:
-    cosign: cpanato/cosign-orb@2
+    cosign-orb: cpanato/cosign-orb@2
   workflows:
-    use-my-orb:
+    use-cosign-orb:
       jobs:
         - cosign/install
         - run:
