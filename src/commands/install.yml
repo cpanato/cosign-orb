@@ -1,3 +1,6 @@
+description: >
+  Install cosign.
+
 parameters:
   version:
     type: string
