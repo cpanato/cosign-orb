@@ -47,7 +47,7 @@ Install_Cosign() {
         curl -LO https://github.com/sigstore/cosign/releases/download/"${COSIGN_VERSION:?}"/cosign-linux-amd64.sig
         curl -LO https://raw.githubusercontent.com/sigstore/cosign/"${COSIGN_VERSION:?}"/release/release-cosign.pub
 
-        if  ./cosign verify-blob -key release-cosign.pub -signature cosign-linux-amd64.sig cosign_"${COSIGN_VERSION:?}"; then exit 1; fi
+        if  ./cosign verify-blob --key release-cosign.pub --signature cosign-linux-amd64.sig cosign_"${COSIGN_VERSION:?}"; then exit 1; fi
         rm cosign
         mv cosign_"${COSIGN_VERSION:?}" cosign
         chmod +x cosign
@@ -56,6 +56,7 @@ Install_Cosign() {
         # shellcheck disable=SC1090
         source "${BASH_ENV}"
         cosign version
+        exit 0
     fi
 }
 
