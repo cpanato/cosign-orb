@@ -11,7 +11,7 @@ For example:
 usage:
   version: 2.1
   orbs:
-    cosign: cpanato/cosign-orb@main
+    cosign: cpanato/cosign-orb@v2.0.0
   workflows:
     use-cosign-orb:
       jobs:
