@@ -2,7 +2,7 @@ description: Simple cosign usage
 usage:
   version: 2.1
   orbs:
-    cosign-orb: cpanato/cosign-orb@2
+    cosign-orb: cpanato/cosign-orb@2.0.0
   workflows:
     use-cosign-orb:
       jobs:
