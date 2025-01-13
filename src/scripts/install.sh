@@ -9,9 +9,9 @@ Install_Cosign() {
     fi
     set -e
 
-    bootstrap_version='v1.8.0'
-    expected_bootstrap_version_digest='5682ad5a0262a4b51883c76d2134f036f2c5ac0b1e3ee8f37b78a45e296e09f6'
-    curl -L https://storage.googleapis.com/cosign-releases/$bootstrap_version/cosign-linux-amd64 -o cosign
+    bootstrap_version='v2.4.1'
+    expected_bootstrap_version_digest='8b24b946dd5809c6bd93de08033bcf6bc0ed7d336b7785787c080f574b89249b'
+    curl -L https://github.com/sigstore/cosign/releases/download/$bootstrap_version/cosign-linux-amd64 -o cosign
     shaBootstrap=$(shasum -a 256 cosign | cut -d' ' -f1);
     if [[ $shaBootstrap != "${expected_bootstrap_version_digest}" ]]; then exit 1; fi
     chmod +x cosign
@@ -35,29 +35,15 @@ Install_Cosign() {
     fi
 
     # Download custom cosign
-    if [[ "${COSIGN_VERSION}" == 'v0.6.0' ]]; then
-        curl -L https://storage.googleapis.com/cosign-releases/v0.6.0/cosign_linux_amd64 -o cosign_"${COSIGN_VERSION}"
-    else
-        curl -L https://storage.googleapis.com/cosign-releases/"${COSIGN_VERSION}"/cosign-linux-amd64 -o cosign_"${COSIGN_VERSION}"
-    fi
+    curl -L https://github.com/sigstore/cosign/releases/download/"${COSIGN_VERSION}"/cosign-linux-amd64 -o cosign_"${COSIGN_VERSION}"
     shaCustom=$(shasum -a 256 cosign_"${COSIGN_VERSION}" | cut -d' ' -f1);
 
     # same hash means it is the same release
     if [[ $shaCustom != "$shaBootstrap" ]];
     then
-        if [[ "${COSIGN_VERSION}" == 'v0.6.0' ]]; then
-            # v0.6.0's linux release has a dependency on `libpcsclite1`
-            sudo apt-get update -q
-            sudo apt-get install -yq libpcsclite1
-            curl -L https://github.com/sigstore/cosign/releases/download/v0.6.0/cosign_linux_amd64_0.6.0_linux_amd64.sig -o cosign-linux-amd64.sig
-        else
-            curl -LO https://github.com/sigstore/cosign/releases/download/"${COSIGN_VERSION}"/cosign-linux-amd64.sig
-        fi
-        if [[ "${COSIGN_VERSION}" < 'v0.6.0' ]]; then
-            curl -L https://raw.githubusercontent.com/sigstore/cosign/"${COSIGN_VERSION}"/.github/workflows/cosign.pub -o release-cosign.pub
-        else
-            curl -LO https://raw.githubusercontent.com/sigstore/cosign/"${COSIGN_VERSION}"/release/release-cosign.pub
-        fi
+        curl -LO https://github.com/sigstore/cosign/releases/download/"${COSIGN_VERSION}"/cosign-linux-amd64.sig
+        curl -LO https://raw.githubusercontent.com/sigstore/cosign/"${COSIGN_VERSION}"/release/release-cosign.pub
+
         ./cosign verify-blob -key release-cosign.pub -signature cosign-linux-amd64.sig cosign_"${COSIGN_VERSION}"
         if [[ $? -ne 0 ]]; then exit 1; fi
         rm cosign
