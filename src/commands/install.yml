@@ -1,9 +1,12 @@
+description: >
+  Install cosign.
+
 parameters:
   version:
     type: string
     description:
       "Version of the Cosign to install. Defaults to the latest version."
-    default: v1.8.0
+    default: v2.4.1
 
 steps:
   - run:
