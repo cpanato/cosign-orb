@@ -4,7 +4,7 @@ description: >
 usage:
   version: 2.1
   orbs:
-    cosign: cpanato/cosign-orb@v2.0.0
+    cosign: cpanato/cosign-orb@2.0.0
   workflows:
     use-my-orb:
       jobs:
